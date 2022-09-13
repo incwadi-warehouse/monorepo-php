@@ -1,0 +1,11 @@
+{
+    "name": "abaldeweg/monorepo-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "André Baldeweg",
+            "email": "a@baldeweg.org"
+        }
+    ],
+    "require": {}
+}
