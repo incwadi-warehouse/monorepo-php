@@ -8,23 +8,21 @@ jobs:
       - checkout
       - run: sudo apt update
       - run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev --no-install-recommends && (yes || true) | sudo pecl install imagick      
-      # - restore_cache:
-      #     keys:
-      #       - v1-dependencies-{{ checksum "composer.lock" }}
-      #       - v1-dependencies-
-      # - run:
-      #     name: "Install Dependencies"
-      #     command: composer install -n --prefer-dist
-      # - save_cache:
-      #     key: v1-dependencies-{{ checksum "composer.lock" }}
-      #     paths:
-      #       - ./vendor
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
       - run:
           name: "Install Dependencies"
           command: cd src/extra-bundle && composer install -n --prefer-dist
-      - run:
-          name: pwd
-          command: echo pwd
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+            - ./src/extra-bundle
+      # - run:
+      #     name: "Install Dependencies"
+      #     command: cd src/extra-bundle && composer install -n --prefer-dist
       - run:
           name: "Run tests"
           command: cd src/extra-bundle && vendor/bin/phpunit
