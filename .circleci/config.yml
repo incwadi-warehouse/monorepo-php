@@ -24,4 +24,4 @@ jobs:
           command: cd src/extra-bundle && composer install -n --prefer-dist
       - run:
           name: "Run tests"
-          command: src/extra-bundle/vendor/bin/phpunit
+          command: vendor/bin/phpunit
