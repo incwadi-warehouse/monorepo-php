@@ -1,0 +1,32 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/php:8.1
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev --no-install-recommends && (yes || true) | sudo pecl install imagick      
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
+      - run:
+          name: "Install Dependencies"
+          command: cd src/extra-bundle && composer install -n --prefer-dist
+      - run:
+          name: "Install Dependencies"
+          command: cd src/api-bundle && composer install -n --prefer-dist
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+            - ./src/extra-bundle
+            - ./src/api-bundle
+      - run:
+          name: "Run tests"
+          command: cd src/extra-bundle && vendor/bin/phpunit
+      - run:
+          name: "Run tests"
+          command: cd src/api-bundle && vendor/bin/phpunit
