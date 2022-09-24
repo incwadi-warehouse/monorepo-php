@@ -23,5 +23,8 @@ jobs:
           name: "Install Dependencies"
           command: cd src/extra-bundle && composer install -n --prefer-dist
       - run:
+          name: pwd
+          command: echo pwd
+      - run:
           name: "Run tests"
-          command: vendor/bin/phpunit
+          command: cd src/extra-bundle && vendor/bin/phpunit
