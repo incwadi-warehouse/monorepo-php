@@ -25,19 +25,21 @@ $serializer = new Serializer();
 $serializer->serialize($entity, $fields);
 ```
 
-There is also an abstract controller to give you access to these features within the controller.
-
 ```php
 use Baldeweg\Bundle\ApiBundle\AbstractApiController;
+use Baldeweg\Bundle\ApiBundle\Response;
+use Baldeweg\Bundle\ApiBundle\Serializer;
+
+$response = new Response(new Serializer());
 
 // Contains the keys of the entity you need
 $fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
 
 // JSON Response with serialized data
-$this->setResponse()->single($fields, $genre); // single entity
-$this->setResponse()->collection($fields, $genres); // array of entities
-$this->setResponse()->invalid(); // Return message and 400 status code
-$this->setResponse()->deleted(); // Return message and 200 status code
+$response->single($fields, $genre); // single entity
+$response->collection($fields, $genres); // array of entities
+$response->invalid(); // Return message and 400 status code
+$response->deleted(); // Return message and 200 status code
 
 // Parse the data from the request and make them available to the form
 $this->submitForm($request)
