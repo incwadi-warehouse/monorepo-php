@@ -17,14 +17,14 @@ class SerializerTest extends TestCase
 
         $entity = $this
             ->getMockBuilder(\stdClass::class)
-            ->addMethods(['getTest', 'getDate', 'getChild', 'getItems'])
+            ->addMethods(['getTest', 'getDateTimestamp', 'getChild', 'getItemsCounter'])
             ->getMock();
         $entity->method('getTest')->willReturn('test');
-        $entity->method('getDate')->willReturn(new \DateTime());
+        $entity->method('getDateTimestamp')->willReturn(1);
         $entity->method('getChild')->willReturn($child);
-        $entity->method('getItems')->willReturn(['child1', 'child2']);
+        $entity->method('getItemsCounter')->willReturn(2);
 
-        $fields = ['test', 'date:timestamp', 'child.title', 'items:count'];
+        $fields = ['test', 'dateTimestamp', 'child.title', 'itemsCounter'];
 
         $serializer = new Serializer();
 
@@ -32,8 +32,8 @@ class SerializerTest extends TestCase
 
         $this->assertIsArray($response);
         $this->assertEquals('test', $response['test']);
-        $this->assertIsInt($response['date']);
+        $this->assertIsInt($response['dateTimestamp']);
         $this->assertEquals('title', $response['child_title']);
-        $this->assertEquals(2, $response['items']);
+        $this->assertEquals(2, $response['itemsCounter']);
     }
 }

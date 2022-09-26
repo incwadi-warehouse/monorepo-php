@@ -13,16 +13,9 @@ class Serializer implements SerializerInterface
 
         $object = [];
         foreach ($fields as $field) {
-            $item = explode(':', (string) $field);
-
-            $property = $this->transformFieldName($item[0]);
+            $property = $this->transformFieldName((string) $field);
             try {
-                $value = $this->transformValue(
-                    isset($item[1]) ? $item[1] : null,
-                    $propertyAccessor->getValue($entity, $item[0])
-                );
-
-                $object[$property] = $value;
+                $object[$property] = $propertyAccessor->getValue($entity, (string) $field);
             } catch (UnexpectedTypeException) {
                 $object[$property] = null;
             }
@@ -34,18 +27,5 @@ class Serializer implements SerializerInterface
     private function transformFieldName(string $field): string
     {
         return str_replace('.', '_', $field);
-    }
-
-    private function transformValue(?string $type = null, $value = null)
-    {
-        if ('timestamp' === $type && $value instanceof \DateTime) {
-            $value = $value->getTimestamp();
-        }
-
-        if ('count' === $type) {
-            $value = count($value);
-        }
-
-        return $value;
     }
 }
