@@ -33,7 +33,7 @@ use Baldeweg\Bundle\ApiBundle\Serializer;
 $response = new Response(new Serializer());
 
 // Contains the keys of the entity you need
-$fields = ['id', 'name', 'user.id', 'createdAt:timestamp', 'comments:count'];
+$fields = ['id', 'name', 'user.id', 'createdAtTimestamp', 'commentsCount'];
 
 // JSON Response with serialized data
 $response->single($fields, $genre); // single entity
@@ -44,10 +44,6 @@ $response->deleted(); // Return message and 200 status code
 // Parse the data from the request and make them available to the form
 $this->submitForm($request)
 ```
-
-You can transform the values, just add a transformer after the field name e.g. `comments:count`.
-
-At the moment only count and timestamp are available.
 
 ## test Trait
 
