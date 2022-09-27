@@ -17,23 +17,13 @@ Baldeweg\Bundle\ApiBundle\BaldewegApiBundle::class => ['all' => true],
 ## Usage
 
 ```php
-use Baldeweg\Bundle\ApiBundle\Serializer;
-
-$fields = ['test', 'date', 'child.title'];
-
-$serializer = new Serializer();
-$serializer->serialize($entity, $fields);
-```
-
-```php
 use Baldeweg\Bundle\ApiBundle\AbstractApiController;
 use Baldeweg\Bundle\ApiBundle\Response;
-use Baldeweg\Bundle\ApiBundle\Serializer;
 
-$response = new Response(new Serializer());
+$response = new Response();
 
 // Contains the keys of the entity you need
-$fields = ['id', 'name', 'user.id', 'createdAtTimestamp', 'commentsCount'];
+$fields = ['id', 'name', 'user' => ['id'], 'createdAtTimestamp', 'commentsCount'];
 
 // JSON Response with serialized data
 $response->single($fields, $genre); // single entity

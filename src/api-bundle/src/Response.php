@@ -3,17 +3,17 @@
 namespace Baldeweg\Bundle\ApiBundle;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
-class Response
+class Response implements ResponseInterface
 {
-    public function __construct(private readonly Serializer $serializer)
-    {
-    }
-
-    public function single(array $fields, $data): JsonResponse
+    public function single(array $fields, \stdClass $data): JsonResponse
     {
         return $this->response(
-            $this->serializer->serialize($data, $fields)
+            $this->serialize($data, $fields)
         );
     }
 
@@ -21,7 +21,7 @@ class Response
     {
         $collection = [];
         foreach ($data as $item) {
-            $collection[] = $this->serializer->serialize($item, $fields);
+            $collection[] = $this->serialize($item, $fields);
         }
 
         return $this->response($collection);
@@ -44,6 +44,17 @@ class Response
             $code,
             $headers,
             true
+        );
+    }
+
+    private function serialize($entity, array $fields): array
+    {
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+
+        return $serializer->normalize(
+            $entity,
+            'json',
+            [AbstractNormalizer::ATTRIBUTES => $fields]
         );
     }
 }

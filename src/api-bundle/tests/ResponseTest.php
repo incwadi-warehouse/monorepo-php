@@ -11,16 +11,33 @@ class ResponseTest extends TestCase
 {
     public function testSingle()
     {
-        $serializer = $this
-            ->getMockBuilder(Serializer::class)
+        $child = $this
+            ->getMockBuilder(\stdClass::class)
+            ->addMethods(['getTitle'])
             ->getMock();
+        $child->method('getTitle')->willReturn('title');
 
-        $fields = ['test', 'date:timestamp', 'child.title', 'items:count'];
+        $entity = $this
+            ->getMockBuilder(\stdClass::class)
+            ->addMethods(['getTest', 'getDateTimestamp', 'getChild', 'getItemsCounter'])
+            ->getMock();
+        $entity->method('getTest')->willReturn('test');
+        $entity->method('getDateTimestamp')->willReturn(1);
+        $entity->method('getChild')->willReturn($child);
+        $entity->method('getItemsCounter')->willReturn(2);
 
-        $response = new Response($serializer);
-        $res = $response->single($fields, []);
+        $fields = ['test', 'dateTimestamp', 'child' => ['title'], 'itemsCounter'];
+
+        $response = new Response();
+        $res = $response->single($fields, $entity);
 
         $this->assertInstanceOf(JsonResponse::class, $res);
+        $content = json_decode($res->getContent(),true);
+        $this->assertIsArray($content);
+        $this->assertEquals('test', $content['test']);
+        $this->assertIsInt($content['dateTimestamp']);
+        $this->assertEquals('title', $content['child']['title']);
+        $this->assertEquals(2, $content['itemsCounter']);
     }
 
     public function testCollection()
@@ -29,7 +46,7 @@ class ResponseTest extends TestCase
             ->getMockBuilder(Serializer::class)
             ->getMock();
 
-        $fields = ['test', 'date:timestamp', 'child.title', 'items:count'];
+        $fields = ['test', 'dateTimestamp', 'child' => ['title'], 'itemsCounter'];
 
         $response = new Response($serializer);
         $res = $response->collection($fields, []);
