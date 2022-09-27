@@ -14,6 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ResetPasswordUserCommand extends Command
 {
     protected static $defaultName = 'user:reset-password';
+    
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $encoder,
