@@ -10,10 +10,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Entity\User;
 
 class ResetPasswordUserCommand extends Command
 {
     protected static $defaultName = 'user:reset-password';
+
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $encoder,
@@ -33,11 +35,7 @@ class ResetPasswordUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $user = $this->em->getRepository(
-            $this->params->get('baldeweg_extra.userclass')
-        )->find(
-            $input->getArgument('id')
-        );
+        $user = $this->em->getRepository(User::class)->find($input->getArgument('id'));
         $pass = bin2hex(random_bytes(6));
         $user->setPassword(
             $this->encoder->hashPassword($user, $pass)
