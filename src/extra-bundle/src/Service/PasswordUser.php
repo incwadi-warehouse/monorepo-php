@@ -68,6 +68,7 @@ class PasswordUser
             );
             $this->getDoctrine()->getManager()->flush();
 
+            // @deprecated
             return new JsonResponse([
                 'id' => $this->getUser()->getId(),
                 'username' => $this->getUser()->getUserIdentifier(),
