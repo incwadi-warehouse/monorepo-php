@@ -13,7 +13,7 @@ use App\Entity\User;
 class ListUserCommand extends Command
 {
     protected static $defaultName = 'user:list';
-
+    
     public function __construct(private readonly EntityManagerInterface $em, private readonly ParameterBagInterface $params)
     {
         parent::__construct();

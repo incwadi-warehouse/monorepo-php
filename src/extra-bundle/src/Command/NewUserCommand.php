@@ -15,7 +15,7 @@ use App\Entity\User;
 class NewUserCommand extends Command
 {
     protected static $defaultName = 'user:new';
-
+    
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $encoder,

@@ -14,7 +14,7 @@ use App\Entity\User;
 class ShowUserCommand extends Command
 {
     protected static $defaultName = 'user:show';
-
+    
     public function __construct(private readonly EntityManagerInterface $em, private readonly ParameterBagInterface $params)
     {
         parent::__construct();

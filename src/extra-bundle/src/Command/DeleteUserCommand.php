@@ -14,6 +14,7 @@ use App\Entity\User;
 class DeleteUserCommand extends Command
 {
     protected static $defaultName = 'user:delete';
+
     public function __construct(private readonly EntityManagerInterface $em, private readonly ParameterBagInterface $params)
     {
         parent::__construct();
