@@ -34,8 +34,8 @@ class MeUser
                 'id' => $this->getUser()->getId(),
                 'username' => $this->getUser()->getUserIdentifier(),
                 'roles' => $this->getUser()->getRoles(),
-                'isUser' => $this->isGranted('ROLE_USER'),
-                'isAdmin' => $this->isGranted('ROLE_ADMIN'),
+                'isUser' => $this->isGranted('ROLE_USER'), // @deprecated
+                'isAdmin' => $this->isGranted('ROLE_ADMIN'), // @deprecated
             ]
         );
     }
