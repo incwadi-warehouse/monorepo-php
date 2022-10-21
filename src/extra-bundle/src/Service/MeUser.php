@@ -13,29 +13,19 @@ class MeUser
     {
     }
 
-    protected function getUser()
-    {
-        return $this->token->getToken()->getUser();
-    }
-
-    protected function isGranted($attribute, $subject = null): bool
-    {
-        return $this->auth->isGranted($attribute, $subject);
-    }
-
     public function me(): JsonResponse
     {
-        if (!$this->isGranted('ROLE_USER')) {
+        if (!$this->auth->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
         }
 
+        $user = $this->token->getToken()->getUser();
+
         return new JsonResponse(
             [
-                'id' => $this->getUser()->getId(),
-                'username' => $this->getUser()->getUserIdentifier(),
-                'roles' => $this->getUser()->getRoles(),
-                'isUser' => $this->isGranted('ROLE_USER'), // @deprecated
-                'isAdmin' => $this->isGranted('ROLE_ADMIN'), // @deprecated
+                'id' => $user->getId(),
+                'username' => $user->getUserIdentifier(),
+                'roles' => $user->getRoles(),
             ]
         );
     }
