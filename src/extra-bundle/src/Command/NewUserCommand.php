@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Entity\User;
 
 class NewUserCommand extends Command
 {
@@ -39,8 +40,7 @@ class NewUserCommand extends Command
         $name = $input->getArgument('name');
         $pass = $input->getArgument('password') ?: bin2hex(random_bytes(6));
 
-        $userclass = $this->params->get('baldeweg_extra.userclass');
-        $user = new $userclass();
+        $user = new User();
         $user->setUsername($name);
         $user->setPassword(
             $this->encoder->hashPassword($user, $pass)

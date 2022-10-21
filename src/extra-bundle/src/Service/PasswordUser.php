@@ -51,6 +51,7 @@ class PasswordUser
 
             $this->registry->getManager()->flush();
 
+            // @deprecated
             return new JsonResponse([
                 'msg' => 'PASSWORD_CHANGED',
             ]);
