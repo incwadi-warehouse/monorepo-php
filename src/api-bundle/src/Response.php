@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 class Response implements ResponseInterface
 {
-    public function single(array $fields, \stdClass $data): JsonResponse
+    public function single(array $fields, $data): JsonResponse
     {
         return $this->response(
             $this->serialize($data, $fields)
