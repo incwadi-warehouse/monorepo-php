@@ -9,10 +9,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Entity\User;
 
 class DeleteUserCommand extends Command
 {
     protected static $defaultName = 'user:delete';
+
     public function __construct(private readonly EntityManagerInterface $em, private readonly ParameterBagInterface $params)
     {
         parent::__construct();
@@ -30,11 +32,7 @@ class DeleteUserCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $this->em->remove(
-            $this->em->getRepository(
-                $this->params->get('baldeweg_extra.userclass')
-            )->find(
-                $input->getArgument('id')
-            )
+            $this->em->getRepository(User::class)->find($input->getArgument('id'))
         );
         $this->em->flush();
 

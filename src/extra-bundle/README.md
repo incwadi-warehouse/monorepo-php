@@ -30,13 +30,6 @@ password:
   methods: PUT
 ```
 
-Define the `User` class in the `config/packages/baldeweg_extra.yaml`. You can omit this setting if you use `App\Entity\User`.
-
-```yaml
-baldeweg_extra:
-  userclass: App\Entity\User
-```
-
 ## Maker
 
 - make:extra:subscriber - Create a Subscriber

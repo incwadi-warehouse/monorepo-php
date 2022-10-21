@@ -8,10 +8,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Entity\User;
 
 class ListUserCommand extends Command
 {
     protected static $defaultName = 'user:list';
+    
     public function __construct(private readonly EntityManagerInterface $em, private readonly ParameterBagInterface $params)
     {
         parent::__construct();
@@ -27,9 +29,7 @@ class ListUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $users = $this->em->getRepository(
-            $this->params->get('baldeweg_extra.userclass')
-        )->findAll();
+        $users = $this->em->getRepository(User::class)->findAll();
         $data = [];
         foreach ($users as $user) {
             $data[] = [

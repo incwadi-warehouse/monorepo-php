@@ -51,7 +51,5 @@ class MeUserTest extends TestCase
         $this->assertIsString($response->id);
         $this->assertIsString($response->username);
         $this->assertIsArray($response->roles);
-        $this->assertIsBool($response->isUser);
-        $this->assertIsBool($response->isAdmin);
     }
 }
