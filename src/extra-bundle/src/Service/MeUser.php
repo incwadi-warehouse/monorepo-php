@@ -26,6 +26,8 @@ class MeUser
                 'id' => $user->getId(),
                 'username' => $user->getUserIdentifier(),
                 'roles' => $user->getRoles(),
+                'isUser' => $this->isGranted('ROLE_USER'),
+                'isAdmin' => $this->isGranted('ROLE_ADMIN'),
             ]
         );
     }
