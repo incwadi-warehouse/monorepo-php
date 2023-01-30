@@ -12,7 +12,7 @@ class MeUser
     public function __construct(private readonly TokenStorageInterface $token, private readonly AuthorizationCheckerInterface $auth)
     {
     }
-    
+
     protected function isGranted($attribute, $subject = null): bool
     {
         return $this->auth->isGranted($attribute, $subject);
