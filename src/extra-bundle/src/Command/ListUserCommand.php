@@ -9,11 +9,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Entity\User;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'user:list')]
 class ListUserCommand extends Command
 {
-    protected static $defaultName = 'user:list';
-    
     public function __construct(private readonly EntityManagerInterface $em, private readonly ParameterBagInterface $params)
     {
         parent::__construct();

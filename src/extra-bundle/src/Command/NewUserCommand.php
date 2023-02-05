@@ -11,11 +11,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Entity\User;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'user:new')]
 class NewUserCommand extends Command
 {
-    protected static $defaultName = 'user:new';
-    
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $encoder,

@@ -11,11 +11,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'user:reset-password')]
 class ResetPasswordUserCommand extends Command
 {
-    protected static $defaultName = 'user:reset-password';
-    
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $encoder,
