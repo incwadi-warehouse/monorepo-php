@@ -23,7 +23,8 @@
     3306
   ],
   "postCreateCommand": {
-    "php": "cd core/ && composer install"
+    "api-bundle": "cd src/api-bundle/ && composer install",
+    "extra-bundle": "cd src/extra-bundle/ && composer install"
   },
   "customizations": {
     "vscode": {
